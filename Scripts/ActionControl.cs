@@ -7,9 +7,10 @@ public class ActionControl : MonoBehaviour
     public GameObject panel;
     CharCon now_char;
     [SerializeField]
-    Transform[] button;
+    Transform[] buttons;
     [SerializeField]
     bool init = false;
+    Button button;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -21,31 +22,41 @@ public class ActionControl : MonoBehaviour
     {
         if (init)
         {
+            buttons[0].gameObject.SetActive(true);
+            buttons[1].gameObject.SetActive(true);
             for (int i = 0; i < now_char.Mob.Skills.Length; i++)
             {
-                button[i + 2].gameObject.SetActive(true);
-                button[i + 2].GetChild(0).GetComponent<TextMeshProUGUI>().text = now_char.Mob.Skills[i].Name;
-
-            }
+                buttons[i + 2].gameObject.SetActive(true);
+                buttons[i + 2].GetChild(0).GetComponent<TextMeshProUGUI>().text = now_char.Mob.Skills[i].Name;
+            }          
         }
         else
         {
             now_char = transform.GetComponent<CharCon>();
-            button = new Transform[panel.transform.childCount];
+            buttons = new Transform[panel.transform.childCount];
             for(int i = 0; i < panel.transform.childCount; i++)
             {
-                button[i] = panel.transform.GetChild(i);
+                buttons[i] = panel.transform.GetChild(i);   
             }
             this.enabled = false;
             init = true;
+        }        
+        foreach(Button b in panel.GetComponentsInChildren<Button>())
+        {
+            Button a = b;
+            a.onClick.AddListener(() => Skill_Click(a));
         }
-
     }
     private void OnDisable()
     {
-        for(int i = 2; i < button.Length; i++)
+        for(int i = 0; i < buttons.Length; i++)
         {
-            button[i].gameObject.SetActive(false);
+            buttons[i].gameObject.SetActive(false);
         }
+    }
+
+    public void Skill_Click(Button button)
+    {
+        Debug.Log(button.name);
     }
 }

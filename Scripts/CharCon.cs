@@ -25,7 +25,7 @@ public class CharCon : MonoBehaviour
     void Start()
     {
         stat = Mob.Stat;
-        Init();
+        Init(stat.Mov);
         //Hilight();
         //string result = string.Join("\n",
         //    can_move.Select(group =>
@@ -36,16 +36,18 @@ public class CharCon : MonoBehaviour
 
     }
 
-    public void Init()
+    public Dictionary<int, List<Tile>> Init(int distance)
     {
         can_move = new Dictionary<int, List<Tile>>();
         temp_move = new List<Tile>();
         temp_move.Add(map.Map[(int)transform.position.z, (int)transform.position.x]);
         can_move.Add(0, temp_move);
-        for (int i = 1; i <= stat.Mov; i++)
+        for (int i = 1; i <= distance; i++)
         {
             MoveRange(i, can_move[i - 1]);
         }
+        return can_move;
+
     }
     // Update is called once per frame
     void Update()

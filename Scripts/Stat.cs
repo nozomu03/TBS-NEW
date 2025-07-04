@@ -13,7 +13,7 @@ public class Stat:ScriptableObject
     [SerializeField]
     float acc;
     [SerializeField]
-    float mov;
+    int mov;
     [SerializeField]
     bool hill;
 
@@ -21,6 +21,6 @@ public class Stat:ScriptableObject
     public float Atk { get => atk; set => atk = value; }
     public float Def { get => def; set => def = value; }
     public float Acc { get => acc; set => acc = value; }
-    public float Mov { get => mov; set => mov = value; }
+    public int Mov { get => mov; set => mov = value; }
     public bool Hill { get => hill; set => hill = value; }
 }

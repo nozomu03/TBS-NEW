@@ -72,7 +72,7 @@ public class MapGen : MonoBehaviour
                     {
                         char_con.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
                         char_con.UnHilight();
-                        char_con.Init();
+                        char_con.Init(char_con.Mob.Stat.Mov);
                         char_con.Mob.Moved = true;
                         char_con.can_move = new Dictionary<int, List<Tile>>();
                         //char_con = null;

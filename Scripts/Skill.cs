@@ -17,6 +17,8 @@ public class Skill : ScriptableObject
     int range;
     [SerializeField]
     float acc;
+    [SerializeField]
+    int distance;
 
     public Category Category { get => category; set => category = value; }
     public float Atk { get => atk; set => atk = value; }
@@ -25,4 +27,5 @@ public class Skill : ScriptableObject
     public int Use_count { get => use_count; set => use_count = value; }
     public string Name { get => name; set => name = value; }
     public ClassType[] Can_learn { get => can_learn; set => can_learn = value; }
+    public int Distance { get => distance; set => distance = value; }
 }
