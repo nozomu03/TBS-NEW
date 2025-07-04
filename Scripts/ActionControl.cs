@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,9 @@ public class ActionControl : MonoBehaviour
     [SerializeField]
     bool init = false;
     Button button;
+    Skill skill;
+    Dictionary<int, List<Tile>> range_dic;
+    Dictionary<int, List<Tile>> distance_dic;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -28,7 +32,9 @@ public class ActionControl : MonoBehaviour
             {
                 buttons[i + 2].gameObject.SetActive(true);
                 buttons[i + 2].GetChild(0).GetComponent<TextMeshProUGUI>().text = now_char.Mob.Skills[i].Name;
-            }          
+                buttons[i + 2].GetComponent<SkillCon>().skill = now_char.Mob.Skills[i];
+
+            }
         }
         else
         {
@@ -57,6 +63,17 @@ public class ActionControl : MonoBehaviour
 
     public void Skill_Click(Button button)
     {
-        Debug.Log(button.name);
+        skill = button.transform.GetComponent<SkillCon>().skill;
+        Debug.Log(skill.Name);
+        distance_dic = now_char.Init(skill.Distance);
+        range_dic = now_char.Init(skill.Range);
+    }
+
+    private void Update()
+    {
+        if(distance_dic != null && range_dic != null)
+        {
+            now_char.Hilight(distance_dic, "Distance", 2);
+        }
     }
 }

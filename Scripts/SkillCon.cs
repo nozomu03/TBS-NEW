@@ -4,20 +4,7 @@ using UnityEngine.UI;
 
 public class SkillCon : MonoBehaviour
 {
-    public CharCon now_char;
-    Camera cam;
-    Tile now_node;
-    Dictionary<int, List<Tile>> distance_dic;
-    Dictionary<int, List<Tile>> range_dic;
-    Button[] buttons;
-    Ray ray;
-    private void OnEnable()
-    {
-        cam = Camera.main;
-        distance_dic = new Dictionary<int, List<Tile>>();
-        range_dic = new Dictionary<int, List<Tile>>();
-    }
-
+    public Skill skill;
     private void Update()
     {
         //ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -29,10 +16,5 @@ public class SkillCon : MonoBehaviour
         //        distance_dic = now_char.Init()
         //    }
         //}
-    }
-
-    public void Skill_Click()
-    {
-        Debug.Log("Å¬¸¯µÊ!");
     }
 }

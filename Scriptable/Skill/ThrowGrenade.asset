@@ -19,3 +19,4 @@ MonoBehaviour:
   atk: 20
   range: 3
   acc: 100
+  distance: 6

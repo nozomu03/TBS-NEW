@@ -105,27 +105,27 @@ public class CharCon : MonoBehaviour
 
     }
 
-    public void Hilight()
+    public void Hilight(Dictionary<int, List<Tile>> mov, string tag, int mat)
     {
         Material org;
         Color tmp;
-        for(int i = 0; i < can_move.Count; i++)
+        for(int i = 0; i < mov.Count; i++)
         {
-            for(int j = 0; j < can_move[i].Count; j++)
+            for(int j = 0; j < mov[i].Count; j++)
             {
-                render = can_move[i][j].GetComponent<MeshRenderer>();
+                render = mov[i][j].GetComponent<MeshRenderer>();
                 org = render.materials[0];
                 tmp = org.color;
                 tmp.a = 0f;
                 org.color = tmp;
                
-                tmp = render.materials[1].color;
+                tmp = render.materials[mat].color;
                 tmp.a = 1f;
-                render.materials[1].color = tmp;
+                render.materials[mat].color = tmp;
 
                 render.materials[0] = render.materials[1];
-                render.materials[1] = org;
-                can_move[i][j].tag = "CanTile";
+                render.materials[mat] = org;
+                mov[i][j].tag = tag;
             }
         }
     }

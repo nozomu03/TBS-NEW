@@ -63,7 +63,7 @@ public class MapGen : MonoBehaviour
                         action_con.panel = panel;
                         action_con.enabled = true;
 
-                        char_con.Hilight();
+                        char_con.Hilight(char_con.can_move, "CanTile", 1);
                     }
                 }
                 else
@@ -90,7 +90,7 @@ public class MapGen : MonoBehaviour
                         text.text = hit.transform.name;
                         action_con.panel = panel;
                         action_con.enabled = true;
-                        char_con.Hilight();
+                        char_con.Hilight(char_con.can_move, "CanTile", 1);
                     }
                     else
                     {
