@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 public class MapGen : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class MapGen : MonoBehaviour
     public Camera camera;
 
     private CharCon char_con;
+    private ActionControl action_con;
+
+    public TextMeshProUGUI text;
+
+    public GameObject panel;    
 
     bool is_block;
 
@@ -50,6 +56,13 @@ public class MapGen : MonoBehaviour
                     {
                         Debug.Log("클릭");
                         char_con = hit.transform.GetComponent<CharCon>();
+                        text.text = hit.transform.name;
+                        text.gameObject.SetActive(true);
+                        panel.SetActive(true);
+                        action_con = hit.transform.GetComponent<ActionControl>();
+                        action_con.panel = panel;
+                        action_con.enabled = true;
+
                         char_con.Hilight();
                     }
                 }
@@ -60,23 +73,33 @@ public class MapGen : MonoBehaviour
                         char_con.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
                         char_con.UnHilight();
                         char_con.Init();
-                        char_con = null;
+                        char_con.Mob.Moved = true;
+                        char_con.can_move = new Dictionary<int, List<Tile>>();
+                        //char_con = null;
+                        action_con.enabled = true;
+
                         SetAlpha();
                     }
                     else if(hit.transform.tag == "Player")
                     {
                         Debug.Log("변경");
                         char_con.UnHilight();
+                        action_con.enabled = false;
                         char_con = hit.transform.GetComponent<CharCon>();
+                        action_con = hit.transform.GetComponent<ActionControl>();
+                        text.text = hit.transform.name;
+                        action_con.panel = panel;
+                        action_con.enabled = true;
                         char_con.Hilight();
                     }
                     else
                     {
-                        if (char_con != null)
-                        {
-                            char_con.UnHilight();
-                            char_con = null;
-                        }
+                        text.gameObject.SetActive(false);
+                        char_con.UnHilight();
+                        action_con.enabled = false;
+                        panel.SetActive(false);
+                        action_con = null;
+                        char_con = null;
                     }
                 }                
             }
@@ -245,8 +268,12 @@ public class MapGen : MonoBehaviour
 
                 now_ally.Add(Instantiate(mobdata.Ally[i]));
                 now_ally[i].transform.position = new Vector3(loc.x + i, mobdata.Map[loc.z, loc.x + i].Height + 1, loc.z);
+                now_ally[i].transform.GetComponent<ActionControl>().panel = panel;
                 now_ally[i].name = "ally" + i;
                 now_ally[i].tag = "Player";
+                now_ally[i].GetComponent<ActionControl>().enabled = true;
+                now_ally[i].GetComponent<ActionControl>().enabled = false;
+
                 //Debug.Log(tmp.transform.position);
             }
         }
@@ -257,9 +284,13 @@ public class MapGen : MonoBehaviour
             for (int i = 0; i < mobdata.Ally.Count; i++)
             {
                 now_ally.Add(Instantiate(mobdata.Ally[i]));
+                now_ally[i].GetComponent<ActionControl>().panel = panel;
                 now_ally[i].transform.position = new Vector3(loc.x, mobdata.Map[loc.z + i, loc.x].Height + 1, loc.z + i);
                 now_ally[i].name = "ally" + i;
                 now_ally[i].tag = "Player";
+                now_ally[i].GetComponent<ActionControl>().enabled = true;
+                now_ally[i].GetComponent<ActionControl>().enabled = false;
+
                 //Debug.Log(tmp.transform.position);
             }
         }

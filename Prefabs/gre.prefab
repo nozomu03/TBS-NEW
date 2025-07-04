@@ -96,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5418796401296889248}
   - component: {fileID: 5497241927873324956}
+  - component: {fileID: -1130457630464563913}
   m_Layer: 0
   m_Name: gre
   m_TagString: Untagged
@@ -140,3 +141,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-1130457630464563913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761897169265653395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697d51f2ee6bd23498c59ee9b67debe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 0}
+  button: {fileID: 8993355078182291291, guid: 202c5217497cef64fbe290c9cf791700, type: 3}

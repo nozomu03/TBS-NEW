@@ -8,8 +8,11 @@ public class Mob : ScriptableObject
     [SerializeField]
     ClassType type;
     [SerializeField]
-    bool selected;
+    bool moved;
+    [SerializeField]
+    Skill[] skills;
     public Stat Stat { get => stat; set => stat = value; }
     public ClassType Type { get => type; set => type = value; }
-    public bool Selected { get => selected; set => selected = value; }
+    public bool Moved { get => moved; set => moved = value; }
+    public Skill[] Skills { get => skills; set => skills = value; }
 }

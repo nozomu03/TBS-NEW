@@ -96,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5418796401296889248}
   - component: {fileID: 5497241927873324956}
+  - component: {fileID: -2712329195943337839}
   - component: {fileID: 5876645698141442441}
   m_Layer: 0
   m_Name: rifle
@@ -141,6 +142,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-2712329195943337839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761897169265653395}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697d51f2ee6bd23498c59ee9b67debe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 0}
+  button:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  init: 0
 --- !u!114 &5876645698141442441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8cbd4c3528eda408002626e9352897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mat: {fileID: 0}
   mob: {fileID: 11400000, guid: 7934f077885ca684b8aa058bc2a036cb, type: 2}
   stat: {fileID: 0}
   map: {fileID: 11400000, guid: 77f5ff36bf80fa54c9c40434d3e606fd, type: 2}
+  render: {fileID: 0}
+  hilight_mat: {fileID: 0}
+  org_mat: []

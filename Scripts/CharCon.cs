@@ -71,6 +71,7 @@ public class CharCon : MonoBehaviour
     public void MoveRange(int distance, List<Tile> tiles)
     {
         temp_move = new List<Tile>();
+
         for (int i = 0; i < tiles.Count; i++)
         {
             if (tiles[i].X + 1 < map.Map_x)
