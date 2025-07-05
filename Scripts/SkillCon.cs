@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class SkillCon : MonoBehaviour
 {
     public Skill skill;
+    public bool listner_add;
     private void Update()
     {
         //ray = cam.ScreenPointToRay(Input.mousePosition);

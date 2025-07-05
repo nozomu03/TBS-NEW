@@ -15,17 +15,18 @@ public class CharCon : MonoBehaviour
     [SerializeField]
     MeshRenderer render;    
     public Dictionary<int, List<Tile>> can_move;
+    public Dictionary<int, List<Tile>> _tmp_can_move;    
     List<Tile> temp_move;
     public Material hilight_mat;
     public List<Material> org_mat;
-
+    public bool now_skill;
     public Mob Mob { get => mob; set => mob = value; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         stat = Mob.Stat;
-        Init(stat.Mov);
+        can_move = Init(stat.Mov, transform.position);
         //Hilight();
         //string result = string.Join("\n",
         //    can_move.Select(group =>
@@ -36,17 +37,18 @@ public class CharCon : MonoBehaviour
 
     }
 
-    public Dictionary<int, List<Tile>> Init(int distance)
+    public Dictionary<int,  List<Tile>> Init(int distance, Vector3 position)
     {
-        can_move = new Dictionary<int, List<Tile>>();
+        _tmp_can_move = new Dictionary<int, List<Tile>>();
         temp_move = new List<Tile>();
-        temp_move.Add(map.Map[(int)transform.position.z, (int)transform.position.x]);
-        can_move.Add(0, temp_move);
+        temp_move.Add(map.Map[(int)position.z, (int)position.x]);
+        Debug.Log(transform.name + ":" + position.z + ":" + position.x);
+        _tmp_can_move.Add(0, temp_move);
         for (int i = 1; i <= distance; i++)
         {
-            MoveRange(i, can_move[i - 1]);
+            MoveRange(i, _tmp_can_move[i - 1]);
         }
-        return can_move;
+        return _tmp_can_move;
 
     }
     // Update is called once per frame
@@ -100,12 +102,12 @@ public class CharCon : MonoBehaviour
             }
 
         }
-        can_move[distance] = temp_move;
-        Debug.Log(string.Join("\n", temp_move.Select(tile => $"({tile.X},{tile.Z},h:{tile.Height}:{transform.name})")));
+        _tmp_can_move[distance] = temp_move;
+        //Debug.Log(string.Join("\n", temp_move.Select(tile => $"({tile.X},{tile.Z},h:{tile.Height}:{transform.name})")));
 
     }
 
-    public void Hilight(Dictionary<int, List<Tile>> mov, string tag, int mat)
+    public void Hilight(Dictionary<int, List<Tile>> mov, string tag, int mat = 1)
     {
         Material org;
         Color tmp;
@@ -129,28 +131,28 @@ public class CharCon : MonoBehaviour
             }
         }
     }
-    public void UnHilight()
+    public void UnHilight(Dictionary<int, List<Tile>> range, int mat = 1)
     {
         Material org;
         Color tmp;
 
-        for (int i = 0; i < can_move.Count; i++)
+        for (int i = 0; i < range.Count; i++)
         {
-            for (int j = 0; j < can_move[i].Count; j++)
+            for (int j = 0; j < range[i].Count; j++)
             {
-                render = can_move[i][j].GetComponent<MeshRenderer>();
+                render = range[i][j].GetComponent<MeshRenderer>();
                 org = render.materials[0];
                 tmp = org.color;
                 tmp.a = 1f;
                 org.color = tmp;
 
-                tmp = render.materials[1].color;
+                tmp = render.materials[mat].color;
                 tmp.a = 0f;
-                render.materials[1].color = tmp;
-                render.materials[0] = render.materials[1];
-                render.materials[1] = org;
+                render.materials[mat].color = tmp;
+                render.materials[0] = render.materials[mat];
+                render.materials[mat] = org;
 
-                can_move[i][j].tag = "Tile";
+                range[i][j].tag = "Tile";
             }
         }
 
