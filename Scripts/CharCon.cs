@@ -1,0 +1,160 @@
+using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+
+public class CharCon : MonoBehaviour
+{    
+    [SerializeField]
+    Material mat;
+    [SerializeField]
+    Mob mob;
+    [SerializeField]
+    Stat stat;
+    [SerializeField]
+    MapMob map;
+    [SerializeField]
+    MeshRenderer render;    
+    public Dictionary<int, List<Tile>> can_move;
+    public Dictionary<int, List<Tile>> _tmp_can_move;    
+    List<Tile> temp_move;
+    public Material hilight_mat;
+    public List<Material> org_mat;
+    public bool now_skill;
+    public Mob Mob { get => mob; set => mob = value; }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        stat = Mob.Stat;
+        can_move = Init(stat.Mov, transform.position);
+        //Hilight();
+        //string result = string.Join("\n",
+        //    can_move.Select(group =>
+        //        $"Key {group.Key} ¡æ " +
+        //        string.Join(", ", group.Value.Select(tile =>
+        //            $"({tile.X},{tile.Z},h:{tile.Height}:{tile.transform.name})"))));
+        //Debug.Log(result);
+
+    }
+
+    public Dictionary<int,  List<Tile>> Init(int distance, Vector3 position)
+    {
+        _tmp_can_move = new Dictionary<int, List<Tile>>();
+        temp_move = new List<Tile>();
+        temp_move.Add(map.Map[(int)position.z, (int)position.x]);
+        Debug.Log(transform.name + ":" + position.z + ":" + position.x);
+        _tmp_can_move.Add(0, temp_move);
+        for (int i = 1; i <= distance; i++)
+        {
+            MoveRange(i, _tmp_can_move[i - 1]);
+        }
+        return _tmp_can_move;
+
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    if(Physics.Raycast(ray, out RaycastHit hit))
+        //    {
+        //        if (hit.transform == transform)
+        //        {
+        //            Debug.Log("Å¬¸¯");
+        //            Hilight();
+        //        }
+        //        if(hit.transform.tag == "CanTile")
+        //        {
+        //            transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
+        //        }
+        //    }
+        //}
+    }
+
+    public void MoveRange(int distance, List<Tile> tiles)
+    {
+        temp_move = new List<Tile>();
+
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            if (tiles[i].X + 1 < map.Map_x)
+            {
+                temp_move.Add(map.Map[tiles[i].Z, tiles[i].X + 1]);
+                render = map.Map[tiles[i].Z, tiles[i].X + 1].GetComponent<MeshRenderer>();
+            }
+            if (tiles[i].X - 1 >= 0)
+            {
+                temp_move.Add(map.Map[tiles[i].Z, tiles[i].X - 1]);
+                render = map.Map[tiles[i].Z, tiles[i].X - 1].GetComponent<MeshRenderer>();
+
+            }
+            if (tiles[i].Z + 1 < map.Map_y)
+            {
+                temp_move.Add(map.Map[tiles[i].Z + 1, tiles[i].X]);
+                render = map.Map[tiles[i].Z + 1, tiles[i].X].GetComponent<MeshRenderer>();
+
+            }
+            if (tiles[i].Z - 1 >= 0)
+            {
+                temp_move.Add(map.Map[tiles[i].Z - 1, tiles[i].X]);
+                render = map.Map[tiles[i].Z - 1, tiles[i].X].GetComponent<MeshRenderer>();
+            }
+
+        }
+        _tmp_can_move[distance] = temp_move;
+        //Debug.Log(string.Join("\n", temp_move.Select(tile => $"({tile.X},{tile.Z},h:{tile.Height}:{transform.name})")));
+
+    }
+
+    public void Hilight(Dictionary<int, List<Tile>> mov, string tag, int mat = 1)
+    {
+        Material org;
+        Color tmp;
+        for(int i = 0; i < mov.Count; i++)
+        {
+            for(int j = 0; j < mov[i].Count; j++)
+            {
+                render = mov[i][j].GetComponent<MeshRenderer>();
+                org = render.materials[0];
+                tmp = org.color;
+                tmp.a = 0f;
+                org.color = tmp;
+               
+                tmp = render.materials[mat].color;
+                tmp.a = 1f;
+                render.materials[mat].color = tmp;
+
+                render.materials[0] = render.materials[1];
+                render.materials[mat] = org;
+                mov[i][j].tag = tag;
+            }
+        }
+    }
+    public void UnHilight(Dictionary<int, List<Tile>> range, int mat = 1)
+    {
+        Material org;
+        Color tmp;
+
+        for (int i = 0; i < range.Count; i++)
+        {
+            for (int j = 0; j < range[i].Count; j++)
+            {
+                render = range[i][j].GetComponent<MeshRenderer>();
+                org = render.materials[0];
+                tmp = org.color;
+                tmp.a = 1f;
+                org.color = tmp;
+
+                tmp = render.materials[mat].color;
+                tmp.a = 0f;
+                render.materials[mat].color = tmp;
+                render.materials[0] = render.materials[mat];
+                render.materials[mat] = org;
+
+                range[i][j].tag = "Tile";
+            }
+        }
+
+    }
+}
