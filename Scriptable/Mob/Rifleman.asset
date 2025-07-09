@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa8f2d5a80cfda4a9953aeae12953e7, type: 3}
   m_Name: Rifleman
   m_EditorClassIdentifier: 
-  stat: {fileID: 11400000, guid: 91fd68cc3c0f48041847907343c2b985, type: 2}
+  stat_temp: {fileID: 11400000, guid: 91fd68cc3c0f48041847907343c2b985, type: 2}
   type: 0
   moved: 1
   skills:
-  - {fileID: 11400000, guid: 63d9d2db9e2a24549a8c6a8f8316b05f, type: 2}
+  - skill: {fileID: 11400000, guid: 1ce72ecc54970bd40a0a87c087dd9b5d, type: 2}
+    use: 100
+  - skill: {fileID: 11400000, guid: 6ddfac1f06bd0074d9069820d1d87878, type: 2}
+    use: 100
+  - skill: {fileID: 11400000, guid: a8bc5950e73356d46b5d25583860f70f, type: 2}
+    use: 2

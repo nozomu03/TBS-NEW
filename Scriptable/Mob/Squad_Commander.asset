@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat: {fileID: 11400000, guid: 769a7a1a9dfb7df449628658bf64b2e6, type: 2}
   type: 2
-  obj: {fileID: 4541027910739873058, guid: 22c79b7529ba3f742ac87806dceba96c, type: 3}
+  moved: 0
+  skills:
+  - {fileID: 0}

@@ -17,4 +17,5 @@ MonoBehaviour:
   def: 5
   acc: 60
   mov: 2
-  hill: 0
+  distance: 4
+  ap: 2

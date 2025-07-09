@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: ThrowGrenade
+  m_Name: Attack
   m_EditorClassIdentifier: Assembly-CSharp::Direct
   category: 6
   can_learn: 
-  name: Throw Grenade
-  atk: 20
-  range: 3
-  acc: 100
-  distance: 6
+  name: Shot
+  atk: 0
+  range: 0
+  acc: 70
+  distance: 5
   duration: 0

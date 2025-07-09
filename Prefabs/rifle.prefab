@@ -155,11 +155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 0}
-  button:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  buttons: []
   init: 0
+  skill: {fileID: 0}
 --- !u!114 &5876645698141442441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,3 +177,4 @@ MonoBehaviour:
   render: {fileID: 0}
   hilight_mat: {fileID: 0}
   org_mat: []
+  now_skill: 0

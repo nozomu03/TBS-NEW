@@ -14,14 +14,11 @@ public class MapGen : MonoBehaviour
 
     public Camera camera;
 
-    private CharCon char_con;
-    private ActionControl action_con;
-    private Transform now_hit;
+
     public TextMeshProUGUI text;
 
     public GameObject panel;
 
-    Ray ray2;
 
     bool is_block;
 
@@ -48,105 +45,10 @@ public class MapGen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if (char_con == null)
-                {
-                    if (hit.transform.tag == "Player")
-                    {
-                        Debug.Log("클릭");
-                        char_con = hit.transform.GetComponent<CharCon>();
-                        text.text = hit.transform.name;
-                        text.gameObject.SetActive(true);
-                        panel.SetActive(true);
-                        action_con = hit.transform.GetComponent<ActionControl>();
-                        action_con.panel = panel;
-                        action_con.enabled = true;
 
-                        char_con.Hilight(char_con.can_move, "CanTile", 1);
-                    }
-                }
-                else
-                {
-                    if (hit.transform.tag == "CanTile")
-                    {
-                        char_con.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
-                        char_con.UnHilight(char_con.can_move);
-                        char_con.Init(char_con.Mob.Stat.Mov, char_con.transform.position);
-                        char_con.Mob.Moved = true;
-                        char_con.can_move = new Dictionary<int, List<Tile>>();
-                        //char_con = null;
-                        action_con.enabled = true;
-
-                        SetAlpha();
-                    }
-                    else if(hit.transform.tag == "Player")
-                    {
-                        Debug.Log("변경");
-                        if (action_con.distance_dic != null && action_con.distance_dic.Count > 0)
-                        {
-                            char_con.UnHilight(action_con.distance_dic, 2);
-                        }
-                        char_con.UnHilight(char_con.can_move);
-                        action_con.enabled = false;
-                        char_con = hit.transform.GetComponent<CharCon>();
-                        action_con = hit.transform.GetComponent<ActionControl>();
-                        text.text = hit.transform.name;
-                        action_con.panel = panel;
-                        action_con.enabled = true;
-                        char_con.Hilight(char_con.can_move, "CanTile", 1);
-                    }
-                    else if(hit.transform.tag == "Distance")
-                    {
-                        Debug.Log("스킬 사용");
-                        text.gameObject.SetActive(false);
-                        Debug.Log(action_con.transform.name);
-                        char_con.UnHilight(action_con.distance_dic, 2);
-                        action_con.Reset();
-                        action_con.enabled = false;
-                        panel.SetActive(false);
-                        action_con = null;
-                        char_con = null;
-
-                    }
-                    else
-                    {
-                        text.gameObject.SetActive(false);
-                        char_con.UnHilight(char_con.can_move);
-                        action_con.enabled = false;
-                        panel.SetActive(false);
-                        action_con = null;
-                        char_con = null;
-                    }
-                }
-            }
-        }
-        if (char_con != null)
-        {
-            if (char_con.now_skill)
-            {
-                ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray2, out RaycastHit hit2))
-                {                   
-                    if (hit2.transform.tag == "Distance")
-                    {
-                           now_hit = hit2.transform;
-                            Debug.Log(Input.mousePosition);
-                            //char_con.UnHilight(action_con.range_dic, 2);
-                            char_con.UnHilight(action_con.range_dic, 1);
-                            action_con.range_dic = char_con.Init(action_con.skill.Range, hit2.transform.position);
-                            char_con.Hilight(action_con.range_dic, "Tile", 1);
-                        
-                    }
-                }
-            }
-        }
     }
 
-    void SetAlpha()
+    public void SetAlpha()
     {
         MeshRenderer render;
         for (int i = 0; i < now_ally.Count; i++)
@@ -174,6 +76,7 @@ public class MapGen : MonoBehaviour
             for (int j = 0; j < mobdata.Map_x; j++)
             {
                 mobdata.Map[i, j] = Instantiate(cube, new Vector3(j, 0, i), Quaternion.Euler(0, 0, 0));
+                mobdata.Map[i, j].name = i + ":" + j;
             }
 
         }
@@ -297,43 +200,50 @@ public class MapGen : MonoBehaviour
     {
         (int x, int z) loc = new (0, 0);
         int _tmp = 0;
-        _tmp = Random.Range(0, 2);        
-        if (_tmp == 0)
-        {
-            loc.x = Random.Range(0, mobdata.Map_x - mobdata.Ally.Count + 1);
-            loc.z = 0;
-            for (int i = 0; i < mobdata.Ally.Count; i++)
-            {
+        _tmp = Random.Range(0, 2);
+        //if (_tmp == 0)
+        //{
+        //    loc.x = Random.Range(0, mobdata.Map_x - mobdata.Ally.Count + 1);
+        //    loc.z = 0;
+        //    for (int i = 0; i < mobdata.Ally.Count; i++)
+        //    {
 
-                now_ally.Add(Instantiate(mobdata.Ally[i]));
-                now_ally[i].transform.position = new Vector3(loc.x + i, mobdata.Map[loc.z, loc.x + i].Height + 1, loc.z);
-                now_ally[i].transform.GetComponent<ActionControl>().panel = panel;
-                now_ally[i].name = "ally" + i;
-                now_ally[i].tag = "Player";
-                now_ally[i].GetComponent<ActionControl>().enabled = true;
-                now_ally[i].GetComponent<ActionControl>().enabled = false;
+        //        now_ally.Add(Instantiate(mobdata.Ally[i]));
+        //        now_ally[i].transform.position = new Vector3(loc.x + i, mobdata.Map[loc.z, loc.x + i].Height + 1, loc.z);
+        //        now_ally[i].transform.GetComponent<ActionControl>().panel = panel;
+        //        now_ally[i].name = "ally" + i;
+        //        now_ally[i].tag = "Player";
+        //        now_ally[i].GetComponent<ActionControl>().enabled = true;
+        //        now_ally[i].GetComponent<ActionControl>().enabled = false;
 
-                //Debug.Log(tmp.transform.position);
-            }
-        }
-        else
-        {
-            loc.z = Random.Range(0, mobdata.Map_y - mobdata.Ally.Count + 1);
-            loc.x = 0;
-            for (int i = 0; i < mobdata.Ally.Count; i++)
-            {
-                now_ally.Add(Instantiate(mobdata.Ally[i]));
-                now_ally[i].GetComponent<ActionControl>().panel = panel;
-                now_ally[i].transform.position = new Vector3(loc.x, mobdata.Map[loc.z + i, loc.x].Height + 1, loc.z + i);
-                now_ally[i].name = "ally" + i;
-                now_ally[i].tag = "Player";
-                now_ally[i].GetComponent<ActionControl>().enabled = true;
-                now_ally[i].GetComponent<ActionControl>().enabled = false;
+        //        //Debug.Log(tmp.transform.position);
+        //    }
+        //}
+        //else
+        //{
+        //    loc.z = Random.Range(0, mobdata.Map_y - mobdata.Ally.Count + 1);
+        //    loc.x = 0;
+        //    for (int i = 0; i < mobdata.Ally.Count; i++)
+        //    {
+        //        now_ally.Add(Instantiate(mobdata.Ally[i]));
+        //        now_ally[i].GetComponent<ActionControl>().panel = panel;
+        //        now_ally[i].transform.position = new Vector3(loc.x, mobdata.Map[loc.z + i, loc.x].Height + 1, loc.z + i);
+        //        now_ally[i].name = "ally" + i;
+        //        now_ally[i].tag = "Player";
+        //        now_ally[i].GetComponent<ActionControl>().enabled = true;
+        //        now_ally[i].GetComponent<ActionControl>().enabled = false;
 
-                //Debug.Log(tmp.transform.position);
-            }
-        }
-        for(int i = 0; i < mobdata.Enermy_count; i++)
+        //        //Debug.Log(tmp.transform.position);
+        //    }
+        //}
+        now_ally.Add(Instantiate(mobdata.Ally[0]));
+        now_ally[0].GetComponent<ActionControl>().panel = panel;
+        now_ally[0].transform.position = new Vector3(5, mobdata.Map[0, 5].Height + 1, 0);
+        now_ally[0].name = "ally" + 0;
+        now_ally[0].tag = "Player";
+        now_ally[0].GetComponent<ActionControl>().enabled = true;
+        now_ally[0].GetComponent<ActionControl>().enabled = false;
+        for (int i = 0; i < mobdata.Enermy_count; i++)
         {
             loc = GetRandomXZ(loc);
             now_enermy.Add(Instantiate(mobdata.Enermy[i]));

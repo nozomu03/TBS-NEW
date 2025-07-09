@@ -4437,6 +4437,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill: {fileID: 0}
   listner_add: 0
+--- !u!1 &1158814530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1158814531}
+  - component: {fileID: 1158814532}
+  m_Layer: 0
+  m_Name: MopCon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1158814531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158814530}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 509.39432, y: 295.73444, z: -72.94043}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158814532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158814530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cd24fdf9073094fa54d0f7de418aa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map_gen: {fileID: 2143665659}
+  char_con: {fileID: 0}
+  action_con: {fileID: 0}
+  now_hit: {fileID: 0}
+  text: {fileID: 0}
+  panel: {fileID: 0}
 --- !u!1 &1373559753
 GameObject:
   m_ObjectHideFlags: 0
@@ -7456,5 +7506,6 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 2143665660}
+  - {fileID: 1158814531}
   - {fileID: 1695454195}
   - {fileID: 427295137}

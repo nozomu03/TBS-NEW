@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
-[System.Serializable]
-public class Stat
+[CreateAssetMenu(fileName = "Ally", menuName = "Scriptable Objects/Stat")]
+
+public class StatTemplate:ScriptableObject
 {
     [SerializeField]
     float hp;
@@ -17,28 +18,6 @@ public class Stat
     int distance;
     [SerializeField]
     int ap;
-
-    public Stat(StatTemplate template)
-    {
-        this.hp = template.Hp;
-        this.atk = template.Atk;
-        this.def = template.Def;
-        this.acc = template.Acc;
-        this.mov = template.Mov;
-        this.distance = template.Distance;
-        this.Ap = template.Ap;
-    }
-
-    public Stat(float hp, int atk, float def, float acc, int mov, int distance, int ap)
-    {
-        this.hp = hp;
-        this.atk = atk;
-        this.def = def;
-        this.acc = acc;
-        this.mov = mov;
-        this.distance = distance;
-        this.Ap = ap;
-    }
 
     public float Hp { get => hp; set => hp = value; }
     public int Atk { get => atk; set => atk = value; }
